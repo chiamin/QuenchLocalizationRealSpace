@@ -45,7 +45,7 @@ dmrg
     sweeps
     {
         maxm   cutoff   niter  noise    nsweep
-        32     1E-10    10     1e-8     1
+        64     1E-10    10     1e-8     1
     }
 }
 
@@ -68,6 +68,6 @@ tdvp
     sweeps
     {
         maxm   minm   cutoff   niter  noise    nsweep
-        32     32     1E-8     20     0        1
+        64     32     1E-8     20     0        1
     }
 }
