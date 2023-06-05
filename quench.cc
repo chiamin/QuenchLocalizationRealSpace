@@ -92,7 +92,7 @@ MPS dmrg_inf (string infile, const vector<Real>& mus_device,
     InputGroup input2 (infile,"dmrg");
     auto WriteDim   = input2.getInt("WriteDim",-1);
     auto ConserveQNs = input2.getYesNo("ConserveQNs",false);
-    auto sweeps     = iut::Read_sweeps (infile);
+    auto sweeps     = iut::Read_sweeps (infile, "sweeps_dmrg");
 
     // Site set
     using SitesType = Fermion;
@@ -228,7 +228,7 @@ void tdvp_quench (string infile, MPS psi, vector<Real>& mus_device,
     auto expandN       = input.getInt("expandN",0);
     auto expand_step   = input.getInt("expand_step",1);
     auto max_window    = input.getInt("max_window",10000);
-    auto sweeps        = iut::Read_sweeps (infile);
+    auto sweeps        = iut::Read_sweeps (infile, "sweeps_tdvp");
 
     auto ErrGoal_LRW   = input.getReal("ErrGoal_LRW");
     auto MaxIter_LRW   = input.getInt("MaxIter_LRW");

@@ -42,7 +42,7 @@ dmrg
 {
     ConserveQNs = no
     WriteDim = 2000
-    sweeps
+    sweeps_dmrg
     {
         maxm   cutoff   niter  noise    nsweep
         64     1E-10    10     1e-8     1
@@ -65,7 +65,7 @@ tdvp
     SVDMethod = gesdd
     WriteDim = 1000
 
-    sweeps
+    sweeps_tdvp
     {
         maxm   minm   cutoff   niter  noise    nsweep
         64     32     1E-8     20     0        1
