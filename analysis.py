@@ -38,6 +38,7 @@ def get_data (fname):
     dens = OrderedDict()
     iL_dev = OrderedDict()
     iR_dev = OrderedDict()
+    bonddim = []
     with open(fname) as f:
         for line in f:
             line = line.lstrip()
@@ -69,6 +70,10 @@ def get_data (fname):
                 i = int(tmp[1])
                 n = float(tmp[-1])
                 ns[i] = n
+            elif line.startswith('Largest link dim'):
+                tmp = line.split()
+                dim = float(tmp[-1])
+                bonddim.append (dim)
 
     xss, tss, Iss, nss = [],[],[],[]
     I_L, I_R, I_mean, ts = [],[],[],[]
@@ -93,7 +98,7 @@ def get_data (fname):
                 I_mean.append (np.mean(Is))#[imp_site-whf:imp_site+whf+1]))
                 ts.append (t)
 
-    return xss, tss, Iss, nss, ts, I_L, I_R, I_mean
+    return xss, tss, Iss, nss, ts, I_L, I_R, I_mean, bonddim
 
 def get_average_current (ts, js, ax=None, tbeg=0., tend=float('inf'), **args):
     ibeg, iend = 0, len(js)
@@ -144,11 +149,11 @@ def plot_data (fname, f2, ax2, tbeg):
         for line in f:
             if 'Largest link dim' in line:
                 m = int(line.split()[-1])
-    #V_lead = get_para (fname, 'V_lead', float)
-    #g = Luttinger_g(V_lead)
-    #print ('g =',g)
+    V_lead = get_para (fname, 'V_lead', float)
+    g = Luttinger_g(V_lead)
+    print ('g =',g)
 
-    xss, tss, Iss, nss, ts, I_Lt, I_Rt, I_mean = get_data (fname)
+    xss, tss, Iss, nss, ts, I_Lt, I_Rt, I_mean, bonddim = get_data (fname)
 
     f1,ax1 = pl.subplots()
     Idata, tmin, tmax, xmin, xmax = to_imag_data (xss, tss, Iss)
@@ -181,10 +186,16 @@ def plot_data (fname, f2, ax2, tbeg):
     I_Rt = [i/Vg for i in I_Rt]
     IL, errL = get_average_current (ts, I_Lt, ax=ax2, tbeg=tbeg, marker='.', label='left')
     IR, errR = get_average_current (ts, I_Rt, ax=ax2, tbeg=tbeg, marker='.', label='right')
-    print ('left current/voltage, err =', IL, errL)
-    print ('right current/voltage, err =', IR, errR)
+    print (IL, errL)
+    print (IR, errR)
     ax2.set_xlabel ('time')
-    ax2.set_ylabel ('current/voltage')
+    ax2.set_ylabel ('current')
+
+    f,ax = pl.subplots()
+    ax.plot (range(len(bonddim)), bonddim)
+    ax.set_xlabel ('time step')
+    ax.set_ylabel ('bond dimension')
+
 
     ps.set([ax, ax1, ax2])
     if '-pdf' in sys.argv:

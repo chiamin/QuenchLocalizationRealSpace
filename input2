@@ -1,0 +1,73 @@
+basic
+{
+    L_lead = 10
+    L_device = 7
+    t_lead = 1
+    t_device = 1
+    t_contactL = 0.2
+    t_contactR = 0.2
+    mu_leadL = 0
+    mu_leadR = 0
+    mu_device = 0
+    V_lead = 0
+    V_device = 2
+    V_contact = 0
+    mu_biasL = 0.5
+    mu_biasS = 0
+    mu_biasR = -0.5
+    disorder_strength = 0
+
+    write = yes
+    write_dir = .
+    write_file = timeevol.save
+    read = no
+    read_dir = .
+    read_file = timeevol.save
+}
+
+itdvp
+{
+    time_steps  = 10
+    dt          = inf
+    max_dim     = 200
+    ErrGoal     = 1e-12
+    MaxIter     = 40
+    ErrGoalInit = 1e-12
+    MaxIterInit = 20
+    SeedInit    = 123456789
+    auto_err    = yes
+}
+
+dmrg
+{
+    ConserveQNs = no
+    WriteDim = 2000
+    sweeps_dmrg
+    {
+        maxm   cutoff   niter  noise    nsweep
+        200    1E-10    10     1e-8     1
+    }
+}
+
+tdvp
+{
+    dt = 0.2
+    time_steps = 1500
+    NumCenter = 2
+    ConserveQNs = no
+
+    expandN = 1
+    expand_step = 5
+    max_window = 600
+
+    ErrGoal_LRW = 1e-12
+    MaxIter_LRW = 40
+    SVDMethod = gesdd
+    WriteDim = 2000
+
+    sweeps_tdvp
+    {
+        maxm   minm   cutoff   niter  noise    nsweep
+        1000   32     1E-7     20     0        1
+    }
+}
