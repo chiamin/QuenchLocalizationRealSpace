@@ -5,7 +5,6 @@ from math import pi, acos
 sys.path.append ('/home/chiamin/mypy/')
 import plotsetting as ps
 import numpy as np
-import fitfun as ff
 import matplotlib.colors as colors
 import cmasher as cmr
 
