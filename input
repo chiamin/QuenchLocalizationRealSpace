@@ -53,7 +53,7 @@ tdvp
 {
     dt = 0.5
     time_steps = 200
-    NumCenter = 1
+    NumCenter = 2
     ConserveQNs = no
 
     expandN = 1
